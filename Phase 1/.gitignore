@@ -1,0 +1,15 @@
+# Compiled class files
+*.class
+
+# Log file
+*.log
+
+# Mac OS files
+.DS_Store
+__MACOSX/
+
+# VS Code settings
+.vscode/
+
+# ANTLR generated files (optional, but usually good to ignore if you regenerate them)
+# For now we keep it simple

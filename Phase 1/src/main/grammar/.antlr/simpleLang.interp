@@ -1,0 +1,50 @@
+token literal names:
+null
+'main'
+'int'
+'bool'
+'if'
+'else'
+'true'
+'false'
+'{'
+'}'
+';'
+'='
+'+'
+'('
+')'
+null
+null
+null
+null
+null
+
+token symbolic names:
+null
+MAIN
+INT
+BOOL
+IF
+ELSE
+TRUE
+FALSE
+LBRACE
+RBRACE
+SEMI
+ASSIGN
+PLUS
+LPAR
+RPAR
+ID
+INT_VAL
+WHITE_SPACE
+LINE_COMMENT
+BLOCK_COMMENT
+
+rule names:
+program
+
+
+atn:
+[4, 1, 19, 5, 2, 0, 7, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 2, 1, 0, 0, 0, 2, 3, 1, 0, 0, 0, 3, 1, 1, 0, 0, 0, 0]
