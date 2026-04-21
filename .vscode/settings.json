@@ -1,0 +1,16 @@
+{
+    "java.project.referencedLibraries": [
+        "utilities/antlr-4.13.1-complete.jar"
+    ],
+    "java.project.sourcePaths": [
+        "src",
+        "generated-sources"
+    ],
+    "antlr4.generation": {
+        "mode": "external",
+        "language": "Java",
+        "listeners": true,
+        "visitors": true,
+        "alternativeJar": "../../../utilities/antlr-4.13.1-complete.jar"
+    }
+}

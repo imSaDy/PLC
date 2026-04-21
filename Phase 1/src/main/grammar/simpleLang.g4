@@ -106,7 +106,7 @@ expr
 // Lexer rules
 
 // 1- General structure
-MAIN : 'main';
+// MAIN : 'Main';
 INT : 'int';
 BOOL : 'bool';
 IF : 'if';
@@ -137,8 +137,6 @@ CHAR: 'char';
 
 
 // 2- Symbols
-LBRACE : '{';
-RBRACE : '}';
 SEMI : ';';
 ASSIGN : '=';
 PLUS : '+';
