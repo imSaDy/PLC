@@ -1,4 +1,4 @@
-// Generated from /home/sadegh/Desktop/Compiler/Template/src/main/grammar/simpleLang.g4 by ANTLR 4.13.1
+// Generated from /home/sadegh/Desktop/PLC/Phase 1/src/main/grammar/simpleLang.g4 by ANTLR 4.13.1
 
     package main.grammar;
     import main.ast.*;

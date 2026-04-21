@@ -1,4 +1,4 @@
-// Generated from /home/sadegh/Desktop/Compiler/Template/src/main/grammar/simpleLang.g4 by ANTLR 4.13.1
+// Generated from /home/sadegh/Desktop/PLC/Phase 1/src/main/grammar/simpleLang.g4 by ANTLR 4.13.1
 
     package main.grammar;
     import main.ast.*;
@@ -20,9 +20,13 @@ public class simpleLangParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		MAIN=1, INT=2, BOOL=3, IF=4, ELSE=5, TRUE=6, FALSE=7, LBRACE=8, RBRACE=9, 
-		SEMI=10, ASSIGN=11, PLUS=12, LPAR=13, RPAR=14, ID=15, INT_VAL=16, WHITE_SPACE=17, 
-		LINE_COMMENT=18, BLOCK_COMMENT=19;
+		MAIN=1, INT=2, BOOL=3, IF=4, ELSE=5, TRUE=6, FALSE=7, MODULE=8, BEGIN=9, 
+		END=10, INCLUDES=11, STRUCT=12, PUBLIC=13, PRIVATE=14, MUT=15, VOID=16, 
+		ELIF=17, WHILE=18, FOR=19, BREAK=20, CONTINUE=21, RETURN=22, THIS=23, 
+		OUTPUT=24, FLOAT=25, DOUBLE=26, CHAR=27, LBRACE=28, RBRACE=29, SEMI=30, 
+		ASSIGN=31, PLUS=32, LPAR=33, RPAR=34, MINUS=35, MULT=36, DIV=37, GT=38, 
+		LT=39, GE=40, LE=41, EQ=42, NEQ=43, DOT=44, COMMA=45, MOD=46, ID=47, INT_VAL=48, 
+		FLOAT_VAL=49, CHAR_VAL=50, WHITE_SPACE=51, LINE_COMMENT=52, BLOCK_COMMENT=53;
 	public static final int
 		RULE_program = 0;
 	private static String[] makeRuleNames() {
@@ -35,14 +39,22 @@ public class simpleLangParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'main'", "'int'", "'bool'", "'if'", "'else'", "'true'", "'false'", 
-			"'{'", "'}'", "';'", "'='", "'+'", "'('", "')'"
+			"'module'", "'begin'", "'end'", "'includes'", "'struct'", "'public'", 
+			"'private'", "'mut'", "'void'", "'elif'", "'while'", "'for'", "'break'", 
+			"'continue'", "'return'", "'this'", "'output'", "'float'", "'double'", 
+			"'char'", "'{'", "'}'", "';'", "'='", "'+'", "'('", "')'", "'-'", "'*'", 
+			"'/'", "'>'", "'<'", "'>='", "'<='", "'=='", "'!='", "'.'", "','", "'%'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "MAIN", "INT", "BOOL", "IF", "ELSE", "TRUE", "FALSE", "LBRACE", 
-			"RBRACE", "SEMI", "ASSIGN", "PLUS", "LPAR", "RPAR", "ID", "INT_VAL", 
+			null, "MAIN", "INT", "BOOL", "IF", "ELSE", "TRUE", "FALSE", "MODULE", 
+			"BEGIN", "END", "INCLUDES", "STRUCT", "PUBLIC", "PRIVATE", "MUT", "VOID", 
+			"ELIF", "WHILE", "FOR", "BREAK", "CONTINUE", "RETURN", "THIS", "OUTPUT", 
+			"FLOAT", "DOUBLE", "CHAR", "LBRACE", "RBRACE", "SEMI", "ASSIGN", "PLUS", 
+			"LPAR", "RPAR", "MINUS", "MULT", "DIV", "GT", "LT", "GE", "LE", "EQ", 
+			"NEQ", "DOT", "COMMA", "MOD", "ID", "INT_VAL", "FLOAT_VAL", "CHAR_VAL", 
 			"WHITE_SPACE", "LINE_COMMENT", "BLOCK_COMMENT"
 		};
 	}
@@ -139,10 +151,10 @@ public class simpleLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0013\u0005\u0002\u0000\u0007\u0000\u0001\u0000\u0001\u0000"+
-		"\u0001\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0003\u0000\u0002\u0001"+
-		"\u0000\u0000\u0000\u0002\u0003\u0001\u0000\u0000\u0000\u0003\u0001\u0001"+
-		"\u0000\u0000\u0000\u0000";
+		"\u0004\u00015\u0005\u0002\u0000\u0007\u0000\u0001\u0000\u0001\u0000\u0001"+
+		"\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0003\u0000\u0002\u0001\u0000"+
+		"\u0000\u0000\u0002\u0003\u0001\u0000\u0000\u0000\u0003\u0001\u0001\u0000"+
+		"\u0000\u0000\u0000";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
