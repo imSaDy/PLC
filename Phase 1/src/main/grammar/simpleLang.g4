@@ -43,7 +43,7 @@ parameter
     : MUT? type ID
 ;
 stmt 
-    : assignment SEMI | if_stmt | while_stmt | for_stmt | return_stmt | output_stmt | break_stmt | continue_stmt | expr SEMI | var_dec
+    : assignment SEMI | if_stmt | while_stmt | for_stmt | return_stmt | output_stmt | break_stmt | continue_stmt | expr SEMI | var_dec SEMI
 ;
 assignment
     : expr ASSIGN expr
@@ -58,7 +58,7 @@ for_stmt
     : FOR LPAR assign_part? SEMI cond_part? SEMI update_part? RPAR BEGIN stmt* END
 ;
 assign_part
-    : assignment (COMMA assignment)*
+    : (assignment | var_dec) (COMMA (assignment | var_dec))*
 ;
 cond_part
     : expr (COMMA expr)*
@@ -79,7 +79,7 @@ continue_stmt
     : CONTINUE SEMI
 ;
 var_dec
-    : MUT? type (LPAR args? RPAR)? ID (ASSIGN expr)? SEMI
+    : MUT? type (LPAR args? RPAR)? ID (ASSIGN expr)? 
 ;
 args 
     : expr (COMMA expr)*
@@ -95,6 +95,7 @@ expr
     | ID 
     | expr DOT ID (LPAR args? RPAR)? 
     | ID LPAR args? RPAR
+    | MINUS expr
     | expr (MULT | DIV | MOD) expr
     | expr (PLUS | MINUS) expr
     | expr (GT | LT | GE | LE) expr
