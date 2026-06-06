@@ -1,34 +1,33 @@
-module Account begin
-    private int balance;
-    public void Account(int initialBalance) begin
-        this.balance = initialBalance;
+struct DataPacket begin
+    private int id;
+    private int payload;
+
+    public void init(int i, int p) begin
+        this.id = i;
+        this.payload = p;
     end
 
-    public int getBalance() begin
-        return this.balance;
+    public int getPayload() begin
+        return this.payload;
     end
 
-    public void deposit(int amount) begin
-        if (amount > 0) begin
-            this.balance = this.balance + amount;
-            output this.balance;
-        end
+    public void setPayload(int p) begin
+        this.payload = p;
     end
 end
 
-module Main begin
+module OwnershipTest begin
+    public DataPacket processPacket(mut DataPacket packet) begin
+        mut int currentVal;
+        currentVal = packet.getPayload();
+        packet.setPayload(currentVal * 2);
+        return packet;
+    end
+
     public void main() begin
-        mut Account(100) myAccount;
-        mut int i = 1;
-
-        output myAccount.getBalance();
-
-        while (i <= 3) begin
-            output i;
-            myAccount.deposit(i * 10);
-            i = i + 1;
-        end
-
-        output myAccount.getBalance();
+        mut DataPacket myPacket;
+        myPacket.init(1, 100);
+        myPacket = processPacket(myPacket);
+        output myPacket.getPayload();
     end
 end

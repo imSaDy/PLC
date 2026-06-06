@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "configurations": [
+        {
+            "name": "Run ANTLR",
+            "type": "antlr-debug",
+            "request": "launch",
+            "input": "${workspaceFolder}/samples/sample1.mol",
+            "grammar": "${workspaceFolder}/src/main/grammar/SimpleLang.g4",
+            "startRule": "program",
+            "printParseTree": true,
+            "visualParseTree": true
+        },
+        {
+            "name": "Run SimpleLang",
+            "type": "java",
+            "request": "launch",
+            "mainClass": "SimpleLang",
+            "args": ["${workspaceFolder}/samples/sample1.mol"]
+        }
+    ]
+}

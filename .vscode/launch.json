@@ -5,18 +5,18 @@
             "name": "Run ANTLR",
             "type": "antlr-debug",
             "request": "launch",
-            "input": "./samples/sample6.mol", 
+            "input": "./samples/sample6.mol",
             "grammar": "./Phase 1/src/main/grammar/simpleLang.g4",
             "startRule": "program",
             "printParseTree": true,
             "visualParseTree": true
         },
         {
-            "name": "Run SimpleLang",   
-            "type": "java",             
-            "request": "launch",        
-            "mainClass": "SimpleLang",              
-            "args": ["./samples/sample1.mol"]          
+            "name": "Run SimpleLang",
+            "type": "java",
+            "request": "launch",
+            "mainClass": "SimpleLang",
+            "args": ["./samples/sample1.mol"]
         },
     ]
 }

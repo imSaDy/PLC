@@ -1,35 +1,34 @@
-module DataPacket begin
-    private int id;
-    private int payload;
-
-    public void init(int i, int p) begin
-        this.id = i;
-        this.payload = p;
+struct Account begin
+    private int balance;
+    public void init(int initialBalance) begin
+        this.balance = initialBalance;
     end
 
-    public int getPayload() begin
-        return this.payload;
+    public int getBalance() begin
+        return this.balance;
     end
 
-    public void setPayload(int p) begin
-        this.payload = p;
-    end
-end
-
-module OwnershipTest begin
-    public DataPacket processPacket(mut DataPacket packet) begin
-        mut int currentVal;
-        currentVal = packet.getPayload();
-        packet.setPayload(currentVal * 2);
-        return packet;
+    public void deposit(int amount) begin
+        if (amount > 0) begin
+            this.balance = this.balance + amount;
+            output this.balance;
+        end
     end
 end
 
-module Main includes OwnershipTest begin
+module Bank begin
     public void main() begin
-        mut DataPacket myPacket;
-        myPacket.init(1, 100);
-        myPacket = this.processPacket(myPacket);
-        output myPacket.getPayload();
+        mut Account(100) myAccount;
+        mut int i = 1;
+
+        output myAccount.getBalance();
+
+        while (i <= 3) begin
+            output i;
+            myAccount.deposit(i * 10);
+            i = i + 1;
+        end
+
+        output myAccount.getBalance();
     end
 end

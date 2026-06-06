@@ -1,3 +1,2 @@
-program [modules:1 structs:0]
-        module Main [methods:1 fields:0]
-                method main (void -> void) [statements:5]
+20
+50

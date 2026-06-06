@@ -1,6 +1,6 @@
 module Account begin
     private int balance;
-    public Account(int initialBalance) begin
+    public void Account(int initialBalance) begin
         this.balance = initialBalance;
     end
 
