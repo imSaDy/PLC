@@ -1,0 +1,12 @@
+module MutabilityTest begin
+
+    int calculateNewValue(int currentValue) begin
+        return currentValue + 10;
+    end
+
+    void main() begin
+        mut int counter = 5;
+        counter = calculateNewValue(counter);
+        output counter;
+    end
+end

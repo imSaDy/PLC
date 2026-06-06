@@ -1,0 +1,28 @@
+module LoopTester begin
+    private int stepCounter;
+
+    public void reset() begin
+        this.stepCounter = 0;
+    end
+
+    public void runLoops() begin
+        this.reset();
+
+        mut int i;
+        mut int j;
+        mut int sum = 0;
+
+        for (i = 0, j = 4; i < 3; i = i + 1, j = j - 1) begin
+            output i;
+            output j;
+
+            sum = sum + (i * j);
+            output sum;
+
+            this.stepCounter = this.stepCounter + 1;
+        end
+
+        output sum;
+        output this.stepCounter;
+    end
+end
