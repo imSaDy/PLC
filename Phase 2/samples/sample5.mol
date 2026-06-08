@@ -11,7 +11,7 @@ module Math begin
     end
 end
 
-module Main begin
+module Main includes Math begin
     public void main() begin
         mut int f;
         f = factorial(5);

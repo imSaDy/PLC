@@ -1,11 +1,17 @@
 // Generated from /home/sadegh/Desktop/PLC/Phase 2/src/main/grammar/SimpleLang.g4 by ANTLR 4.13.1
 
+    package main.grammar;
+    
     import main.ast.core.*;
-
     import main.ast.declarations.*;
     import main.ast.declarations.Module;
     import main.ast.statements.*;
-
+    
+    import main.ast.types.*;
+    import main.ast.expressions.*;
+    import main.ast.expressions.literals.*;
+    import java.util.ArrayList;
+    import java.util.List;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -222,4 +228,11 @@ public class SimpleLangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitInitexpr(SimpleLangParser.InitexprContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUpdateExpr(SimpleLangParser.UpdateExprContext ctx) { return visitChildren(ctx); }
 }

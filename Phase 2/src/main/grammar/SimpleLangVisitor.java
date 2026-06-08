@@ -1,11 +1,17 @@
 // Generated from /home/sadegh/Desktop/PLC/Phase 2/src/main/grammar/SimpleLang.g4 by ANTLR 4.13.1
 
+    package main.grammar;
+    
     import main.ast.core.*;
-
     import main.ast.declarations.*;
     import main.ast.declarations.Module;
     import main.ast.statements.*;
-
+    
+    import main.ast.types.*;
+    import main.ast.expressions.*;
+    import main.ast.expressions.literals.*;
+    import java.util.ArrayList;
+    import java.util.List;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -191,4 +197,10 @@ public interface SimpleLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitInitexpr(SimpleLangParser.InitexprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SimpleLangParser#updateExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUpdateExpr(SimpleLangParser.UpdateExprContext ctx);
 }

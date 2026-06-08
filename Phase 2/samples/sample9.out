@@ -1,0 +1,12 @@
+program [modules:2 structs:1]
+	struct Vector [fields:2]
+		field x float:public
+		field y float
+	module MathUtils [methods:2 fields:1]
+		field operationCount int:private
+		method add (int*int -> int):public [statements:1]
+		method doNothing (void -> void) [statements:0]
+	module Main [methods:1 fields:2]
+		field origin Vector
+		field isReady bool:public
+		method main (void -> void):public [statements:3]

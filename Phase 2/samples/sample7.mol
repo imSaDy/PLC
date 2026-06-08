@@ -28,15 +28,19 @@ module Geometry includes MathUtils begin
 
         output p.x;
         output p.y;
-
         mut float area = this.multiply(p.x, 4.0);
-
         mut bool check = this.isPositive(area);
 
-        if (not check or (p.y < 0.0)) begin
+        if (p.y < 0.0) begin
             output 0;
         end else begin
             output 1;
         end
+    end
+end
+
+module Main includes Geometry begin
+    public void main() begin
+        this.processPoint();
     end
 end

@@ -1,11 +1,18 @@
 grammar SimpleLang;
-@header {
-    import main.ast.core.*;
 
+@header {
+    package main.grammar;
+    
+    import main.ast.core.*;
     import main.ast.declarations.*;
     import main.ast.declarations.Module;
     import main.ast.statements.*;
-
+    
+    import main.ast.types.*;
+    import main.ast.expressions.*;
+    import main.ast.expressions.literals.*;
+    import java.util.ArrayList;
+    import java.util.List;
 }
 
 program returns [Program programRet]
@@ -20,11 +27,11 @@ topLevelDecl returns [TopLevelDecl topLevelDeclRet]
         m=module
         { $topLevelDeclRet =$m.moduleRet;
 
-         }
+        }
     |
         s=structDef
         { $topLevelDeclRet = $s.structRet;
-      }
+    }
     ;
 
 module returns [Module moduleRet]
@@ -112,7 +119,7 @@ type returns [Type typeRet]
         KW_FLOAT
 
     |
-       KW_DOUBLE
+        KW_DOUBLE
 
     |
         KW_CHAR
@@ -230,26 +237,37 @@ ifStmt returns [IfStmt ifStmtRet]
         { $ifStmtRet.setLine($k.line); }
     ;
 
-forStmt
+forStmt returns [ForStmt forStmtRet]
     :
-        KW_FOR
+        k=KW_FOR
+        {
+            $forStmtRet = new ForStmt();
+            $forStmtRet.setLine($k.line);
+        }
         LPAREN
-        (initexpr (COMMA initexpr)*)?
+        (i1=initexpr { $forStmtRet.addInitializer($i1.initExprRet); }
+            (COMMA i2=initexpr { $forStmtRet.addInitializer($i2.initExprRet); })*)?
         SEMI
-        (expr)?
+        (c=expr { $forStmtRet.setCondition($c.expressionRet); })?
         SEMI
-        (loc ASSIGN expr (COMMA loc ASSIGN expr)*)?
+        (u1=updateExpr { $forStmtRet.addUpdater($u1.updateExprRet); }
+            (COMMA u2=updateExpr { $forStmtRet.addUpdater($u2.updateExprRet); })*)?
         RPAREN
-        st
+        b=st
+        { $forStmtRet.setBody($b.statementRet); }
     ;
 
-whileStmt
+whileStmt returns [WhileStmt whileStmtRet]
     :
-        KW_WHILE
+        k=KW_WHILE
         LPAREN
-        expr
+        e=expr
         RPAREN
-        st
+        s=st
+        {
+            $whileStmtRet = new WhileStmt($e.expressionRet, $s.statementRet);
+            $whileStmtRet.setLine($k.line);
+        }
     ;
 assignStmt returns [AssignStmt assignStmtRet]
     :
@@ -338,67 +356,123 @@ methodcall returns [MethodCall methodCallRet]
 
         LPAREN
         (e1=expr
-         { $methodCallRet.addArgument($e1.expressionRet);}
-         (COMMA e2=expr
+        { $methodCallRet.addArgument($e1.expressionRet);}
+        (COMMA e2=expr
         { $methodCallRet.addArgument($e2.expressionRet); }
-          )*)?
+        )*)?
         RPAREN
         { $methodCallRet.setLine($i.line); }
     ;
 
-expr returns[Expression expressionRet]
+expr returns [Expression expressionRet]
     :
-        loc
-
+        l=loc
+        { $expressionRet = $l.locationRet; }
     |
-        KW_THIS
-
+        k=KW_THIS
+        {
+            ThisLoc thisLoc = new ThisLoc();
+            thisLoc.setLine($k.line);
+            $expressionRet = thisLoc;
+        }
     |
-        methodcall
-
+        m=methodcall
+        { $expressionRet = $m.methodCallRet; }
     |
-        cons
-
+        c=cons
+        { $expressionRet = $c.constructorCallRet; }
     |
-        LPAREN expr RPAREN
-
+        p=LPAREN
+        e=expr
+        RPAREN
+        { $expressionRet = $e.expressionRet; }
     |
-        CONSTINT
-
+        i=CONSTINT
+        {
+            $expressionRet = new IntLiteral(Integer.parseInt($i.text));
+            $expressionRet.setLine($i.line);
+        }
     |
-        CONSTFLOAT
-
+        f=CONSTFLOAT
+        {
+            $expressionRet = new FloatLiteral(Float.parseFloat($f.text));
+            $expressionRet.setLine($f.line);
+        }
     |
-        CONSTDOUBLE
-
+        d=CONSTDOUBLE
+        {
+            $expressionRet = new DoubleLiteral(Double.parseDouble($d.text));
+            $expressionRet.setLine($d.line);
+        }
     |
-        CONSTCHAR
-
+        ch=CONSTCHAR
+        {
+            $expressionRet = new CharLiteral($ch.text.charAt(1));
+            $expressionRet.setLine($ch.line);
+        }
     |
-        CONSTBOOL
-
+        b=CONSTBOOL
+        {
+            $expressionRet = new BoolLiteral(Boolean.parseBoolean($b.text));
+            $expressionRet.setLine($b.line);
+        }
     |
-        (MINUS | KW_NOT) expr
-
+        op=(MINUS | KW_NOT)
+        e=expr
+        {
+            $expressionRet = new UnaryExpression($op.text, $e.expressionRet);
+            $expressionRet.setLine($op.line);
+        }
     |
-        expr (STAR | SLASH) expr
-
+        left=expr
+        op=(STAR | SLASH)
+        right=expr
+        {
+            $expressionRet = new BinaryExpression($left.expressionRet, $op.text, $right.expressionRet);
+            $expressionRet.setLine($op.line);
+        }
     |
-        expr (PLUS | MINUS) expr
-
+        left=expr
+        op=(PLUS | MINUS)
+        right=expr
+        {
+            $expressionRet = new BinaryExpression($left.expressionRet, $op.text, $right.expressionRet);
+            $expressionRet.setLine($op.line);
+        }
     |
-        expr (LESS | GREATER | LESS_EQ | GREATER_EQ) expr
-
+        left=expr
+        op=(LESS | GREATER | LESS_EQ | GREATER_EQ)
+        right=expr
+        {
+            $expressionRet = new BinaryExpression($left.expressionRet, $op.text, $right.expressionRet);
+            $expressionRet.setLine($op.line);
+        }
     |
-        expr (EQUAL | NOT_EQUAL) expr
-
+        left=expr
+        op=(EQUAL | NOT_EQUAL)
+        right=expr
+        {
+            $expressionRet = new BinaryExpression($left.expressionRet, $op.text, $right.expressionRet);
+            $expressionRet.setLine($op.line);
+        }
     |
-        expr KW_AND expr
-
+        left=expr
+        op=KW_AND
+        right=expr
+        {
+            $expressionRet = new BinaryExpression($left.expressionRet, "and", $right.expressionRet);
+            $expressionRet.setLine($op.line);
+        }
     |
-        expr KW_OR expr
-
+        left=expr
+        op=KW_OR
+        right=expr
+        {
+            $expressionRet = new BinaryExpression($left.expressionRet, "or", $right.expressionRet);
+            $expressionRet.setLine($op.line);
+        }
     ;
+
 initexpr returns [Statement initExprRet]
     :
         v1=vardecl
@@ -417,6 +491,17 @@ initexpr returns [Statement initExprRet]
         e2=expr
         { ((VarDeclStmt)$initExprRet).setInitial($e2.expressionRet); }
         { $initExprRet.setLine($v2.varRet.getLine()); }
+    ;
+
+updateExpr returns [AssignStmt updateExprRet]
+    :
+        l=loc
+        a=ASSIGN
+        e=expr
+        {
+            $updateExprRet = new AssignStmt($l.locationRet, $e.expressionRet);
+            $updateExprRet.setLine($a.line);
+        }
     ;
 
 KW_MODULE   : 'module' ;

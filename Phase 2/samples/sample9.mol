@@ -1,0 +1,35 @@
+%% ۱. تست استراکت و حالت بدون مودیفایر
+struct Vector begin
+    public float x;
+    float y; %% تست: بدون مودیفایر دسترسی
+end
+
+%% ۲. تست ماژول و متدهای متنوع
+module MathUtils begin
+    private int operationCount;
+
+    %% تست: متد با چند پارامتر ورودی و شمارش ۱ استیتمنت
+    public int add(int a, int b) begin
+        return a + b;
+    end
+
+    %% تست: متد بدون پارامتر (void)، نوع بازگشتی void، بدون مودیفایر، و صفر استیتمنت
+    void doNothing() begin
+    end
+end
+
+%% ۳. تست ارث‌بری ماژول، تایپ سازنده (Constructor) و شمارش دقیق استیتمنت‌ها
+module Main includes MathUtils begin
+    mut Vector(0.0, 0.0) origin; %% تست: تعیین تایپ از روی Constructor Call و بدون مودیفایر
+    public bool isReady;
+
+    public void main() begin
+        %% این بلاک دقیقاً ۳ استیتمنت دارد
+        this.origin.x = 10.0;
+        this.isReady = true;
+        
+        if (this.isReady) begin
+            output 1;
+        end
+    end
+end
