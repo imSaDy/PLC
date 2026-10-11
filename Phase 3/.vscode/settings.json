@@ -1,0 +1,39 @@
+{
+    // start: Phase 3 Java and ANTLR workspace settings
+    "java.project.sourcePaths": [
+        "src",
+        "gen"
+    ],
+    "java.project.outputPath": "out",
+    "java.project.referencedLibraries": [
+        "utilities/antlr-4.13.1-complete.jar"
+    ],
+    "java.project.resourceFilters": [
+        "node_modules",
+        "\\.git",
+        "\\.antlr",
+        "\\.codex-build",
+        "build"
+    ],
+    "java.import.exclusions": [
+        "**/.antlr/**",
+        "**/.codex-build/**",
+        "**/build/**",
+        "**/out/**"
+    ],
+    "files.exclude": {
+        "**/.antlr": true
+    },
+    "antlr4.generation": {
+        "mode": "external",
+        "outputDir": "../../../gen/main/grammar",
+        "language": "Java",
+        "listeners": true,
+        "visitors": true,
+        "alternativeJar": "../../../utilities/antlr-4.13.1-complete.jar"
+    },
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.debug.settings.console": "integratedTerminal",
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable"
+    // end: Phase 3 Java and ANTLR workspace settings
+}

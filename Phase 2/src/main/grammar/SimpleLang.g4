@@ -38,13 +38,15 @@ module returns [Module moduleRet]
     :
         k=KW_MODULE
         i=ID
-        { $moduleRet = new Module(new Identifier($i.text));
-        $moduleRet.setLine($i.line); }
-        (KW_INCLUDES i1=ID { $moduleRet.addInclude(new Identifier($i1.text)); } (COMMA i2=ID { $moduleRet.addInclude(new Identifier($i2.text)); } )*)?
+        {
+            $moduleRet = new Module(new Identifier($i.text));
+            $moduleRet.setLine($i.line);
+        }
+        (KW_INCLUDES i1=ID { $moduleRet.addInclude(new Identifier($i1.text)); }
+        (COMMA i2=ID { $moduleRet.addInclude(new Identifier($i2.text)); } )*)?
         KW_BEGIN
-        (member)*
+        (m=member { $moduleRet.addMember($m.memberRet); })*
         KW_END
-
     ;
 
 structDef returns [Struct structRet]
@@ -52,22 +54,38 @@ structDef returns [Struct structRet]
         k=KW_STRUCT
         i=ID
         KW_BEGIN
-        member*
+        {
+            $structRet = new Struct(new Identifier($i.text));
+            $structRet.setLine($k.line);
+        }
+        (m=member { $structRet.addMember($m.memberRet); })*
         KW_END
-
     ;
 
-member
+member returns [Member memberRet]
     :
-        accessModifier?
+        a=accessModifier?
         m=method_decl
-
+        {
+            MethodDecl methodDecl = new MethodDecl();
+            methodDecl.setMethod($m.methodRet);
+            if ($a.ctx != null) {
+                methodDecl.setAccessModifier($a.accessModifierRet);
+            }
+            $memberRet = methodDecl;
+        }
     |
-
-        accessModifier?
+        a=accessModifier?
         v=vardecl
-
         SEMI
+        {
+            VarDecl varDecl = new VarDecl();
+            varDecl.setVar($v.varRet);
+            if ($a.ctx != null) {
+                varDecl.setAccessModifier($a.accessModifierRet);
+            }
+            $memberRet = varDecl;
+        }
     ;
 
 accessModifier returns [AccessModifier accessModifierRet]
@@ -110,26 +128,19 @@ parameter returns [Parameter parameterRet]
 
 type returns [Type typeRet]
     :
-        ID
-
+        i=ID      { $typeRet = new UserDefinedType(new Identifier($i.text)); }
     |
-        KW_INT
-
+        KW_INT    { $typeRet = new PrimitiveType(PrimitiveType.Primitive.INT); }
     |
-        KW_FLOAT
-
+        KW_FLOAT  { $typeRet = new PrimitiveType(PrimitiveType.Primitive.FLOAT); }
     |
-        KW_DOUBLE
-
+        KW_DOUBLE { $typeRet = new PrimitiveType(PrimitiveType.Primitive.DOUBLE); }
     |
-        KW_CHAR
-
+        KW_CHAR   { $typeRet = new PrimitiveType(PrimitiveType.Primitive.CHAR); }
     |
-        KW_VOID
-
+        KW_VOID   { $typeRet = new PrimitiveType(PrimitiveType.Primitive.VOID); }
     |
-        KW_BOOL
-
+        KW_BOOL   { $typeRet = new PrimitiveType(PrimitiveType.Primitive.BOOL); }
     ;
 
 vardecl returns [Var varRet]

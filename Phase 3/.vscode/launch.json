@@ -1,0 +1,39 @@
+{
+    "version": "0.2.0",
+    // start: Phase 3 launch configurations
+    "configurations": [
+        {
+            "name": "Debug Phase 3 Grammar (duplicate)",
+            "type": "antlr-debug",
+            "request": "launch",
+            "input": "${workspaceFolder}/samples/Name/duplicate.mol",
+            "grammar": "${workspaceFolder}/src/main/grammar/SimpleLang.g4",
+            "startRule": "program",
+            "printParseTree": true,
+            "visualParseTree": true
+        },
+        {
+            "name": "Run Phase 3 Analyzer (choose MOL file)",
+            "type": "java",
+            "request": "launch",
+            "mainClass": "SimpleLang",
+            "args": [
+                "${input:molProgram}"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "encoding": "UTF-8",
+            "shortenCommandLine": "auto",
+            "stopOnEntry": false
+        }
+    ],
+    "inputs": [
+        {
+            "id": "molProgram",
+            "type": "promptString",
+            "description": "MOL file path (relative to the Phase 3 workspace)",
+            "default": "samples/Name/duplicate.mol"
+        }
+    ]
+    // end: Phase 3 launch configurations
+}
